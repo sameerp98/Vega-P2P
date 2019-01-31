@@ -1,0 +1,375 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="14.3.0">
+  <zoom_level>8</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>232</x>
+      <y>472</y>
+      <w>192</w>
+      <h>104</h>
+    </coordinates>
+    <panel_attributes>GnutellaFactory
+--
+-port: Integer 
+-protocol: GnutellaProtocol
+--
++buildProtocol(): guntellaProtocol
++startConnection(): void
++clientConnectionFailed(): void 
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>656</x>
+      <y>464</y>
+      <w>208</w>
+      <h>224</h>
+    </coordinates>
+    <panel_attributes>GnutellaProtocol
+--
+descriptor: DescriptorHeader
+--
+-init():void
++connectionMade()
++connectionLoat()
++dataRecieved()
++handleMessage(): void
++buildHeader(): String
++sendPing()
++sendPong()
++handlePong()
++sendQuery()
++sendQueryHit()
++handleQuery()
++handleQueryHit()
++getFile()
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>200</x>
+      <y>784</y>
+      <w>168</w>
+      <h>112</h>
+    </coordinates>
+    <panel_attributes>Ping
+--
+descriptorID: Long
+payloadDescriptor: Char
+ttl: Char
+hopes: Char
+payloadLength: Integer
+--
++convertToString(): String
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>736</x>
+      <y>784</y>
+      <w>168</w>
+      <h>160</h>
+    </coordinates>
+    <panel_attributes>Pong
+--
+port
+ip
+numberOfFileShared
+numberOfKBShared
+descriptorID: Long
+payloadDescriptor: Char
+ttl: Char
+hopes: Char
+payloadLength: Integer
+--
++convertToString(): String
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>376</x>
+      <y>784</y>
+      <w>168</w>
+      <h>136</h>
+    </coordinates>
+    <panel_attributes>Query
+--
+minimumSpeed
+searchCriteria
+descriptorID: Long
+payloadDescriptor: Char
+ttl: Char
+hopes: Char
+payloadLength: Integer
+--
++convertToString(): String
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>552</x>
+      <y>784</y>
+      <w>168</w>
+      <h>184</h>
+    </coordinates>
+    <panel_attributes>QueryHit
+--
+numberOfHits
+port
+ip
+speed
+resultSet
+serverIdentifier
+descriptorID: Long
+payloadDescriptor: Char
+ttl: Char
+hopes: Char
+payloadLength: Integer
+--
++convertToString(): String
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>464</x>
+      <y>568</y>
+      <w>168</w>
+      <h>152</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;DescriptorHeader&gt;&gt;
+--
+descriptorID: Long
+payloadDescriptor: Char
+ttl: Char
+hopes: Char
+payloadLength: Integer
+--
++convertToString(): String</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>528</x>
+      <y>712</y>
+      <w>104</w>
+      <h>88</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;70.0;110.0;70.0;110.0;90.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>576</x>
+      <y>712</y>
+      <w>248</w>
+      <h>88</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;50.0;290.0;50.0;290.0;90.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>264</x>
+      <y>712</y>
+      <w>240</w>
+      <h>88</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>280.0;10.0;280.0;70.0;10.0;70.0;10.0;90.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>504</x>
+      <y>712</y>
+      <w>24</w>
+      <h>88</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;90.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>528</x>
+      <y>528</y>
+      <w>144</w>
+      <h>56</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-
+m1=1
+m2=1
+</panel_attributes>
+    <additional_attributes>10.0;50.0;10.0;10.0;160.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>232</x>
+      <y>104</y>
+      <w>192</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;Factory&gt;&gt;
+{Twisted library implementation}
+--
+
+--
++buildProtocol(): guntellaProtocol
++startConnection(): void
++clientConnectionFailed(): void 
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>656</x>
+      <y>0</y>
+      <w>208</w>
+      <h>248</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;Protocol&gt;&gt;
+{Twisted library implementation}
+--
+
+--
+-init():void
++connectionMade()
++connectionLoat()
++dataRecieved()
++handleMessage(): void
++buildHeader(): String
++sendPing()
++sendPong()
++handlePong()
++sendQuery()
++sendQueryHit()
++handleQuery()
++handleQueryHit()
++getFile()
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>320</x>
+      <y>216</y>
+      <w>24</w>
+      <h>272</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;320.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>752</x>
+      <y>240</y>
+      <w>24</w>
+      <h>240</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;280.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>416</x>
+      <y>472</y>
+      <w>256</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>lt=-
+creates &gt;
+</panel_attributes>
+    <additional_attributes>10.0;20.0;300.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>416</x>
+      <y>96</y>
+      <w>256</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>lt=-
+use &gt;
+</panel_attributes>
+    <additional_attributes>10.0;20.0;300.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>456</x>
+      <y>160</y>
+      <w>168</w>
+      <h>288</h>
+    </coordinates>
+    <panel_attributes>Node
+{the main method class}
+--
+connections: array
+listener: null
+nodeID: null
+files: array
+logFile: FileDescriptor
+port: Integer
+msgID: Integer
+msgTimeOut: Float
+MIN_CONNS: Integer
+MAX_CONNS: Integer
+UNDER_PROB: Integer
+OVER_PROB: Integer
+--
++makePeerConnection(): Integer
++shouldConnect(): Boolean
++cleanPeerList(): Integer
++readInput(): Integer
++writeLog(): Integer
++isValid(): Boolean
++main(): void</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>616</x>
+      <y>280</y>
+      <w>104</w>
+      <h>200</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;110.0;10.0;110.0;230.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>376</x>
+      <y>288</y>
+      <w>96</w>
+      <h>200</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>100.0;10.0;10.0;10.0;10.0;230.0</additional_attributes>
+  </element>
+</diagram>
