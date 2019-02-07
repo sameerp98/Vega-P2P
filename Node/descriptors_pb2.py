@@ -19,7 +19,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   name='descriptors.proto',
   package='protocols',
   syntax='proto2',
-  serialized_pb=_b('\n\x11\x64\x65scriptors.proto\x12\tprotocols\"\xe9\x01\n\x10\x44\x65scriptorHeader\x12\x15\n\rdescriptor_id\x18\x01 \x02(\x0c\x12\x0b\n\x03ttl\x18\x02 \x02(\x05\x12\x0c\n\x04hops\x18\x03 \x02(\x05\x12I\n\x12payload_descriptor\x18\x04 \x02(\x0e\x32-.protocols.DescriptorHeader.PayloadDescriptor\x12\x16\n\x0epayload_length\x18\x05 \x02(\x05\"@\n\x11PayloadDescriptor\x12\x08\n\x04PING\x10\x00\x12\x08\n\x04PONG\x10\x01\x12\t\n\x05QUERY\x10\x02\x12\x0c\n\x08QUERYHIT\x10\x03\">\n\x04Ping\x12\x36\n\x11\x64\x65scriptor_header\x18\x01 \x02(\x0b\x32\x1b.protocols.DescriptorHeader\"\x95\x01\n\x04Pong\x12\x36\n\x11\x64\x65scriptor_header\x18\x01 \x02(\x0b\x32\x1b.protocols.DescriptorHeader\x12\x0c\n\x04port\x18\x02 \x02(\x05\x12\x12\n\nip_address\x18\x03 \x02(\x0c\x12\x1a\n\x12no_of_files_shared\x18\x04 \x02(\x05\x12\x17\n\x0fno_of_kb_shared\x18\x05 \x02(\x05\"o\n\x05Query\x12\x36\n\x11\x64\x65scriptor_header\x18\x01 \x02(\x0b\x32\x1b.protocols.DescriptorHeader\x12\x15\n\rminimum_speed\x18\x02 \x02(\x05\x12\x17\n\x0fsearch_criteria\x18\x03 \x02(\x0c\"\x9d\x02\n\x08QueryHit\x12\x36\n\x11\x64\x65scriptor_header\x18\x01 \x02(\x0b\x32\x1b.protocols.DescriptorHeader\x12\x12\n\nno_of_hits\x18\x02 \x02(\x05\x12\x0c\n\x04port\x18\x03 \x02(\x05\x12\x12\n\nip_address\x18\x04 \x02(\x0c\x12\r\n\x05speed\x18\x05 \x02(\x05\x12\x31\n\nresult_set\x18\x06 \x03(\x0b\x32\x1d.protocols.QueryHit.ResultSet\x12\x1a\n\x12servent_identifier\x18\x07 \x02(\x0c\x1a\x45\n\tResultSet\x12\x12\n\nfile_index\x18\x01 \x02(\x05\x12\x11\n\tfile_size\x18\x02 \x02(\x05\x12\x11\n\tfile_name\x18\x03 \x02(\x0c')
+  serialized_pb=_b('\n\x11\x64\x65scriptors.proto\x12\tprotocols\"\xe9\x01\n\x10\x44\x65scriptorHeader\x12\x15\n\rdescriptor_id\x18\x01 \x02(\t\x12\x0b\n\x03ttl\x18\x02 \x02(\x05\x12\x0c\n\x04hops\x18\x03 \x02(\x05\x12I\n\x12payload_descriptor\x18\x04 \x02(\x0e\x32-.protocols.DescriptorHeader.PayloadDescriptor\x12\x16\n\x0epayload_length\x18\x05 \x02(\x05\"@\n\x11PayloadDescriptor\x12\x08\n\x04PING\x10\x00\x12\x08\n\x04PONG\x10\x01\x12\t\n\x05QUERY\x10\x02\x12\x0c\n\x08QUERYHIT\x10\x03\">\n\x04Ping\x12\x36\n\x11\x64\x65scriptor_header\x18\x01 \x02(\x0b\x32\x1b.protocols.DescriptorHeader\"\x95\x01\n\x04Pong\x12\x36\n\x11\x64\x65scriptor_header\x18\x01 \x02(\x0b\x32\x1b.protocols.DescriptorHeader\x12\x0c\n\x04port\x18\x02 \x02(\x05\x12\x12\n\nip_address\x18\x03 \x02(\t\x12\x1a\n\x12no_of_files_shared\x18\x04 \x02(\x05\x12\x17\n\x0fno_of_kb_shared\x18\x05 \x02(\x05\"o\n\x05Query\x12\x36\n\x11\x64\x65scriptor_header\x18\x01 \x02(\x0b\x32\x1b.protocols.DescriptorHeader\x12\x15\n\rminimum_speed\x18\x02 \x02(\x05\x12\x17\n\x0fsearch_criteria\x18\x03 \x02(\t\"\x9d\x02\n\x08QueryHit\x12\x36\n\x11\x64\x65scriptor_header\x18\x01 \x02(\x0b\x32\x1b.protocols.DescriptorHeader\x12\x12\n\nno_of_hits\x18\x02 \x02(\x05\x12\x0c\n\x04port\x18\x03 \x02(\x05\x12\x12\n\nip_address\x18\x04 \x02(\t\x12\r\n\x05speed\x18\x05 \x02(\x05\x12\x31\n\nresult_set\x18\x06 \x03(\x0b\x32\x1d.protocols.QueryHit.ResultSet\x12\x1a\n\x12servent_identifier\x18\x07 \x02(\t\x1a\x45\n\tResultSet\x12\x12\n\nfile_index\x18\x01 \x02(\x05\x12\x11\n\tfile_size\x18\x02 \x02(\x05\x12\x11\n\tfile_name\x18\x03 \x02(\t')
 )
 
 
@@ -64,8 +64,8 @@ _DESCRIPTORHEADER = _descriptor.Descriptor(
   fields=[
     _descriptor.FieldDescriptor(
       name='descriptor_id', full_name='protocols.DescriptorHeader.descriptor_id', index=0,
-      number=1, type=12, cpp_type=9, label=2,
-      has_default_value=False, default_value=_b(""),
+      number=1, type=9, cpp_type=9, label=2,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -169,8 +169,8 @@ _PONG = _descriptor.Descriptor(
       options=None),
     _descriptor.FieldDescriptor(
       name='ip_address', full_name='protocols.Pong.ip_address', index=2,
-      number=3, type=12, cpp_type=9, label=2,
-      has_default_value=False, default_value=_b(""),
+      number=3, type=9, cpp_type=9, label=2,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -228,8 +228,8 @@ _QUERY = _descriptor.Descriptor(
       options=None),
     _descriptor.FieldDescriptor(
       name='search_criteria', full_name='protocols.Query.search_criteria', index=2,
-      number=3, type=12, cpp_type=9, label=2,
-      has_default_value=False, default_value=_b(""),
+      number=3, type=9, cpp_type=9, label=2,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -273,8 +273,8 @@ _QUERYHIT_RESULTSET = _descriptor.Descriptor(
       options=None),
     _descriptor.FieldDescriptor(
       name='file_name', full_name='protocols.QueryHit.ResultSet.file_name', index=2,
-      number=3, type=12, cpp_type=9, label=2,
-      has_default_value=False, default_value=_b(""),
+      number=3, type=9, cpp_type=9, label=2,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -324,8 +324,8 @@ _QUERYHIT = _descriptor.Descriptor(
       options=None),
     _descriptor.FieldDescriptor(
       name='ip_address', full_name='protocols.QueryHit.ip_address', index=3,
-      number=4, type=12, cpp_type=9, label=2,
-      has_default_value=False, default_value=_b(""),
+      number=4, type=9, cpp_type=9, label=2,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -345,8 +345,8 @@ _QUERYHIT = _descriptor.Descriptor(
       options=None),
     _descriptor.FieldDescriptor(
       name='servent_identifier', full_name='protocols.QueryHit.servent_identifier', index=6,
-      number=7, type=12, cpp_type=9, label=2,
-      has_default_value=False, default_value=_b(""),
+      number=7, type=9, cpp_type=9, label=2,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
