@@ -22,12 +22,10 @@ class TestDescriptionHeaders(unittest.TestCase):
 		self.assertEqual(Pong.ip, local_ip_address)
 
 	def test_query(self):
+		
 		new_query = Query(search_criteria = "xd")
 		self.assertEqual(Query.search_criteria, "xd")
-'''
-	def test_query_hit(self):
-		new_query_hit = QueryHit(hits=10, speed=4, result_set=)
-'''
+
 
 
 
