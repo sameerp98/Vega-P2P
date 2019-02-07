@@ -43,6 +43,6 @@ class TestDescriptionHeaders(unittest.TestCase):
 					new_file.file_size = os.path.getsize(os.path.join(current_path, file))
 					new_file.file_name = os.path.join(current_path, file)
 					file_index += 1
-		print(new_query_hit.result_set)
+		
 
 
