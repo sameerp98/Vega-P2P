@@ -1,0 +1,53 @@
+syntax = "proto2";
+
+package protocols; 
+
+message DescriptorHeader{
+    required bytes descriptor_id = 1;
+    required int32 ttl = 2;
+    required int32 hops = 3;
+
+    enum PayloadDescriptor{
+        PING = 0;
+        PONG = 1;
+        QUERY = 2;
+        QUERYHIT = 3;
+    }
+    
+    required PayloadDescriptor payload_discriptor = 4;
+    required int32 payload_length = 5;
+}
+
+message Ping{
+    required DescriptorHeader discriptor_header = 1;
+}
+
+message Pong{
+    required DescriptorHeader discriptor_header = 1;
+    required int32 port = 2;
+    required bytes ip_address = 3;
+    required int32 no_of_files_shared = 4;
+    required int32 no_of_kb_shared = 5;
+}
+
+message Query{
+    required DescriptorHeader discriptor_header = 1;
+    required int32 minimum_speed = 2;
+    required bytes search_criteria = 3;
+}
+
+message QueryHit{
+    required DescriptorHeader discriptor_header = 1;
+    required int32 no_of_hits = 2;
+    required int32 port = 3;
+    required bytes ip_address = 4;
+    required int32 speed = 5;
+    
+    message ResultSet{
+        required int32 file_index = 1;
+        required int32 file_size = 2; 
+        required bytes file_name = 3;
+    }
+    repeated ResultSet result_set = 6;
+    required bytes servent_identifier = 7;
+}
