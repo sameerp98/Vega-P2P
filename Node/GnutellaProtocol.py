@@ -1,8 +1,9 @@
 from twisted.internet.protocol import Protocol, Factory
 
 class GnutellaProtocol(Protocol):
-	def dataReceived(self, data):
-		#deserialize data
-		#check descriptor type
+	def __init__(self):
+		self.status = "incomplete"
 
 class GnutellaFactory(Factory):
+	def __init__(self):
+		self.status = "incomplete"

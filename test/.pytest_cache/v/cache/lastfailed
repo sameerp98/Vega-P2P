@@ -1,4 +1,8 @@
 {
   "test_headers.py": true,
-  "test_protocol.py": true
+  "test_protocol.py::TestProtocol": true,
+  "test_protocol.py::TestProtocol::test_connection": true,
+  "test_protocol.py::TestProtocol::test_ping": true,
+  "test_protocol.py::TestProtocol::test_query": true,
+  "test_protocol.py::TestProtocol::test_scan": true
 }
