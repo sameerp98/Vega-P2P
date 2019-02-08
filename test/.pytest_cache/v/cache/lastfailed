@@ -1,3 +1,4 @@
 {
-  "test_headers.py": true
+  "test_headers.py": true,
+  "test_protocol.py": true
 }
