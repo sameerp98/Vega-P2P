@@ -27,6 +27,7 @@ class TestDescriptionHeaders(unittest.TestCase):
 	def test_query(self):
 		new_query = Query()
 		new_query.search_criteria = "xd"
+		new_query.descriptor_header.payload_descriptor = DescriptorHeader.QUERY
 		self.assertEqual(new_query.search_criteria, "xd")
 
 	def test_query_hit(self):
