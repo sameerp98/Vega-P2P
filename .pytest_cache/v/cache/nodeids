@@ -1,6 +1,0 @@
-[
-  "test/test_protocol.py::TestProtocol::test_connection",
-  "test/test_protocol.py::TestProtocol::test_ping",
-  "test/test_protocol.py::TestProtocol::test_query",
-  "test/test_protocol.py::TestProtocol::test_scan"
-]
