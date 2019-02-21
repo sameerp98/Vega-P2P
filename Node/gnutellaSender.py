@@ -7,6 +7,7 @@ from descriptors_pb2 import DescriptorHeader, Ping, Pong, Query, QueryHit
 #from twisted.protocols import basic
 import sys
 connections = []
+createdPingID = []
 
 class Gnutella (Protocol):
     # class Gnutella (basic.LineReceiver):
@@ -20,6 +21,7 @@ class Gnutella (Protocol):
         connections.append(self)
         peer = self.transport.getPeer()
         print("Connected to {0}:{1}".format(peer.host, peer.port))
+        print("self address", self.transport.getHost().host, ":", self.transport.getHost().port)
         if self.initiator:
             self.transport.write("GNUTELLA CONNECT /0.4 \n\n")
 
@@ -35,8 +37,13 @@ class Gnutella (Protocol):
         print("data recieved", data)
         if data == "Gnutella OK \n\n":
         	self.send_ping()
+        else:
+            new_data = deserialize.deserialize(data)
+            if new_data.descriptor_header.payload_descriptor == DescriptorHeader.PONG:
+                self.handle_pong(new_data)
 
     def handle_message(self, data):
+        #handle gnutella connect and gnutella ok here
         peer = self.transport.getPeer()
         print("sending ping to {0}".format(peer.host))
         self.send_ping()
@@ -52,13 +59,23 @@ class Gnutella (Protocol):
         ping = Ping()
         ping.descriptor_header.ttl = 7
         ping.descriptor_header.descriptor_id = str(uuid.uuid4())
-        ping.descriptor_header.hops = 4
+        ping.descriptor_header.hops = 0
         ping.descriptor_header.payload_descriptor = DescriptorHeader.PING
-        ping.descriptor_header.payload_length = 5
+        ping.descriptor_header.payload_length = 0
+        createdPingID.append(ping.descriptor_header.descriptor_id)
         print("Ping is being sent")
         for cn in connections:
             cn.transport.write(ping.SerializeToString())
-
+    
+    def handle_pong(self, pong):
+        #if the pong id matched created ping id, save it somehow
+        #else discard it
+        print("pong recieved ", pong)
+        for id in createdPingID:
+            if id == pong.descriptor_header.descriptor_id:
+                print("pong will be appended")
+                return
+        print("not my pong, discarded")
 
 class GnutellaFactory (Factory):
     def __init__(self, isInitializer=False):
