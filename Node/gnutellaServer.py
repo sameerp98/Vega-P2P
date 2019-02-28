@@ -2,8 +2,8 @@ from twisted.internet.protocol import Protocol, Factory
 from twisted.internet.endpoints import TCP4ClientEndpoint, connectProtocol, TCP4ServerEndpoint
 from twisted.internet import reactor
 from twisted.protocols import basic
-import deserialize
-from descriptors_pb2 import DescriptorHeader, Ping, Pong, Query, QueryHit
+import Node.deserialize as deserialize
+from Node.descriptors_pb2 import DescriptorHeader, Ping, Pong, Query, QueryHit
 import uuid
 connections = []
 seenPingID = []
@@ -49,7 +49,7 @@ class Gnutella (Protocol):
         connections.append(self)
         peer = self.transport.getPeer()
         print("Connected to {0}:{1}".format(peer.host, peer.port))
-        self.transport.write("Gnutella OK \n\n")
+        self.transport.write("Gnutella OK \n\n".encode('utf-8'))
 
     def send_ping(self, ping):
         #send ping to all connections except self 
@@ -61,7 +61,7 @@ class Gnutella (Protocol):
         print("Sending ping")
         for cn in connections:
             if cn != self:
-                cn.transport.write(p)  
+                cn.transport.write(p.encode('utf-8'))  
 
     def handle_ping(self, ping):
         # append the ping id to seen array 
@@ -92,7 +92,7 @@ class Gnutella (Protocol):
         print("pong created")
         p = pong.SerializeToString()
         for cn in connections:
-            cn.transport.write(p)  # send p object here
+            cn.transport.write(p.encode('utf-8'))  # send p object here
     
     def handle_pong(self, pong):
         #check if the same ping id has been recieved by this node. 

@@ -1,9 +1,9 @@
 from twisted.internet.protocol import Protocol, Factory
 from twisted.internet.endpoints import TCP4ClientEndpoint, connectProtocol, TCP4ServerEndpoint
 from twisted.internet import reactor
-import deserialize
+import Node.deserialize as deserialize
 import uuid
-from descriptors_pb2 import DescriptorHeader, Ping, Pong, Query, QueryHit
+from Node.descriptors_pb2 import DescriptorHeader, Ping, Pong, Query, QueryHit
 #from twisted.protocols import basic
 import sys
 connections = []
@@ -23,8 +23,8 @@ class Gnutella (Protocol):
         print("Connected to {0}:{1}".format(peer.host, peer.port))
         print("self address", self.transport.getHost().host, ":", self.transport.getHost().port)
         if self.initiator:
-            self.transport.write("GNUTELLA CONNECT /0.4 \n\n")
-
+            self.transport.write("GNUTELLA CONNECT /0.4 \n\n".encode('utf-8'))
+ 
     def setInitializer(self):
         print("idk")
         self.initiator = True
@@ -65,7 +65,7 @@ class Gnutella (Protocol):
         createdPingID.append(ping.descriptor_header.descriptor_id)
         print("Ping is being sent")
         for cn in connections:
-            cn.transport.write(ping.SerializeToString())
+            cn.transport.write(ping.SerializeToString().encode('utf-8'))
     
     def handle_pong(self, pong):
         #if the pong id matched created ping id, save it somehow
