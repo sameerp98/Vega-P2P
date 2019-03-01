@@ -1,10 +1,15 @@
 import unittest
-from Node.GnutellaProtocol import GnutellaProtocol, GnutellaFactory
+from Node import gnutellaSender
+from Node import gnutellaServer
 
 class TestProtocol(unittest.TestCase):
 
 	def test_connection(self):
-		self.assertEqual(True, False)
+		server = gnutellaServer.GnutellaFactory()
+    	usedport = reactor.listenTCP(8000, server)
+		reactor.connectTCP("127.0.0.1", 8000, GnutellaFactory(True))
+    	reactor.run()
+
 
 	def test_scan(self):
 		self.assertEqual(True, False)

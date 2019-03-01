@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <diagram program="umlet" version="14.3.0">
-  <zoom_level>9</zoom_level>
+  <zoom_level>7</zoom_level>
   <element>
     <id>UMLState</id>
     <coordinates>
-      <x>261</x>
-      <y>117</y>
-      <w>81</w>
-      <h>54</h>
+      <x>147</x>
+      <y>140</y>
+      <w>63</w>
+      <h>42</h>
     </coordinates>
     <panel_attributes>Listening</panel_attributes>
     <additional_attributes/>
@@ -15,10 +15,10 @@
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>144</x>
-      <y>117</y>
-      <w>135</w>
-      <h>36</h>
+      <x>56</x>
+      <y>140</y>
+      <w>105</w>
+      <h>28</h>
     </coordinates>
     <panel_attributes>lt=-&gt;
 </panel_attributes>
@@ -27,10 +27,10 @@
   <element>
     <id>UMLSpecialState</id>
     <coordinates>
-      <x>135</x>
-      <y>126</y>
-      <w>18</w>
-      <h>18</h>
+      <x>49</x>
+      <y>147</y>
+      <w>14</w>
+      <h>14</h>
     </coordinates>
     <panel_attributes>type=initial</panel_attributes>
     <additional_attributes/>
@@ -38,10 +38,10 @@
   <element>
     <id>UMLState</id>
     <coordinates>
-      <x>459</x>
-      <y>432</y>
-      <w>126</w>
-      <h>63</h>
+      <x>301</x>
+      <y>385</y>
+      <w>98</w>
+      <h>49</h>
     </coordinates>
     <panel_attributes>Creating Query 
 Object with 
@@ -51,10 +51,10 @@ filename</panel_attributes>
   <element>
     <id>UMLState</id>
     <coordinates>
-      <x>459</x>
-      <y>117</y>
-      <w>99</w>
-      <h>63</h>
+      <x>301</x>
+      <y>140</y>
+      <w>77</w>
+      <h>49</h>
     </coordinates>
     <panel_attributes>Creating Ping 
 Object</panel_attributes>
@@ -63,10 +63,10 @@ Object</panel_attributes>
   <element>
     <id>UMLState</id>
     <coordinates>
-      <x>702</x>
-      <y>432</y>
-      <w>153</w>
-      <h>63</h>
+      <x>490</x>
+      <y>385</y>
+      <w>119</w>
+      <h>49</h>
     </coordinates>
     <panel_attributes>Broadcasting Query
 Object</panel_attributes>
@@ -75,10 +75,10 @@ Object</panel_attributes>
   <element>
     <id>UMLState</id>
     <coordinates>
-      <x>450</x>
-      <y>567</y>
-      <w>423</w>
-      <h>189</h>
+      <x>294</x>
+      <y>490</y>
+      <w>329</w>
+      <h>147</h>
     </coordinates>
     <panel_attributes>Handle Query
 --
@@ -96,10 +96,10 @@ valign=top
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>333</x>
-      <y>126</y>
-      <w>144</w>
-      <h>36</h>
+      <x>203</x>
+      <y>147</y>
+      <w>112</w>
+      <h>28</h>
     </coordinates>
     <panel_attributes>lt=-&gt;
 Send Ping</panel_attributes>
@@ -108,10 +108,10 @@ Send Ping</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>288</x>
-      <y>162</y>
-      <w>207</w>
-      <h>153</h>
+      <x>168</x>
+      <y>175</y>
+      <w>161</w>
+      <h>119</h>
     </coordinates>
     <panel_attributes>lt=-&gt;
 Receiving Ping</panel_attributes>
@@ -120,10 +120,10 @@ Receiving Ping</panel_attributes>
   <element>
     <id>UMLState</id>
     <coordinates>
-      <x>522</x>
-      <y>306</y>
-      <w>90</w>
-      <h>45</h>
+      <x>350</x>
+      <y>287</y>
+      <w>70</w>
+      <h>35</h>
     </coordinates>
     <panel_attributes>Creating 
 Pong Object</panel_attributes>
@@ -132,10 +132,10 @@ Pong Object</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>549</x>
-      <y>126</y>
-      <w>171</w>
-      <h>36</h>
+      <x>371</x>
+      <y>147</y>
+      <w>133</w>
+      <h>28</h>
     </coordinates>
     <panel_attributes>lt=-&gt;
 Object created</panel_attributes>
@@ -144,10 +144,10 @@ Object created</panel_attributes>
   <element>
     <id>UMLState</id>
     <coordinates>
-      <x>702</x>
-      <y>126</y>
-      <w>135</w>
-      <h>54</h>
+      <x>490</x>
+      <y>147</y>
+      <w>105</w>
+      <h>42</h>
     </coordinates>
     <panel_attributes>Broadcasting Ping</panel_attributes>
     <additional_attributes/>
@@ -155,10 +155,10 @@ Object created</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>288</x>
-      <y>0</y>
-      <w>477</w>
-      <h>144</h>
+      <x>168</x>
+      <y>49</y>
+      <w>371</w>
+      <h>112</h>
     </coordinates>
     <panel_attributes>lt=-&gt;
 </panel_attributes>
@@ -167,10 +167,10 @@ Object created</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>288</x>
-      <y>288</y>
-      <w>189</w>
-      <h>189</h>
+      <x>168</x>
+      <y>273</y>
+      <w>147</w>
+      <h>147</h>
     </coordinates>
     <panel_attributes>lt=-&gt;
 Send Query</panel_attributes>
@@ -179,10 +179,10 @@ Send Query</panel_attributes>
   <element>
     <id>UMLSpecialState</id>
     <coordinates>
-      <x>486</x>
-      <y>315</y>
-      <w>18</w>
-      <h>18</h>
+      <x>322</x>
+      <y>294</y>
+      <w>14</w>
+      <h>14</h>
     </coordinates>
     <panel_attributes>type=initial</panel_attributes>
     <additional_attributes/>
@@ -190,10 +190,10 @@ Send Query</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>495</x>
-      <y>306</y>
-      <w>45</w>
-      <h>36</h>
+      <x>329</x>
+      <y>287</y>
+      <w>35</w>
+      <h>28</h>
     </coordinates>
     <panel_attributes>lt=-&gt;
 </panel_attributes>
@@ -202,10 +202,10 @@ Send Query</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>603</x>
-      <y>306</y>
-      <w>198</w>
-      <h>36</h>
+      <x>413</x>
+      <y>287</y>
+      <w>154</w>
+      <h>28</h>
     </coordinates>
     <panel_attributes>lt=-&gt;
 Send pong back to the origin</panel_attributes>
@@ -214,10 +214,10 @@ Send pong back to the origin</panel_attributes>
   <element>
     <id>UMLSpecialState</id>
     <coordinates>
-      <x>783</x>
-      <y>315</y>
-      <w>18</w>
-      <h>18</h>
+      <x>553</x>
+      <y>294</y>
+      <w>14</w>
+      <h>14</h>
     </coordinates>
     <panel_attributes>type=final</panel_attributes>
     <additional_attributes/>
@@ -225,10 +225,10 @@ Send pong back to the origin</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>738</x>
-      <y>171</y>
-      <w>234</w>
-      <h>117</h>
+      <x>518</x>
+      <y>182</y>
+      <w>203</w>
+      <h>91</h>
     </coordinates>
     <panel_attributes>lt=-&gt;
 Decrease TTL of received Ping object</panel_attributes>
@@ -237,10 +237,10 @@ Decrease TTL of received Ping object</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>576</x>
-      <y>441</y>
-      <w>144</w>
-      <h>36</h>
+      <x>392</x>
+      <y>392</y>
+      <w>112</w>
+      <h>28</h>
     </coordinates>
     <panel_attributes>lt=-&gt;
 Object created</panel_attributes>
@@ -249,10 +249,10 @@ Object created</panel_attributes>
   <element>
     <id>UMLState</id>
     <coordinates>
-      <x>522</x>
-      <y>693</y>
-      <w>126</w>
-      <h>45</h>
+      <x>350</x>
+      <y>588</y>
+      <w>98</w>
+      <h>35</h>
     </coordinates>
     <panel_attributes>Creating QueryHit
 Object</panel_attributes>
@@ -261,10 +261,10 @@ Object</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>306</x>
-      <y>45</y>
-      <w>873</w>
-      <h>432</h>
+      <x>182</x>
+      <y>84</y>
+      <w>693</w>
+      <h>336</h>
     </coordinates>
     <panel_attributes>lt=-&gt;
 Broadcasting Query</panel_attributes>
@@ -273,10 +273,10 @@ Broadcasting Query</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>756</x>
-      <y>486</y>
-      <w>270</w>
-      <h>99</h>
+      <x>532</x>
+      <y>427</y>
+      <w>231</w>
+      <h>77</h>
     </coordinates>
     <panel_attributes>lt=-&gt;
 Decrease TTL of the received Query Object</panel_attributes>
@@ -285,10 +285,10 @@ Decrease TTL of the received Query Object</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>288</x>
-      <y>450</y>
-      <w>180</w>
-      <h>180</h>
+      <x>168</x>
+      <y>399</y>
+      <w>140</w>
+      <h>140</h>
     </coordinates>
     <panel_attributes>lt=-&gt;
 Receive Query</panel_attributes>
@@ -297,10 +297,10 @@ Receive Query</panel_attributes>
   <element>
     <id>UMLState</id>
     <coordinates>
-      <x>477</x>
-      <y>270</y>
-      <w>396</w>
-      <h>135</h>
+      <x>315</x>
+      <y>259</y>
+      <w>308</w>
+      <h>105</h>
     </coordinates>
     <panel_attributes>Handle Ping
 --
@@ -314,10 +314,10 @@ valign=top
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>468</x>
-      <y>648</y>
-      <w>81</w>
-      <h>81</h>
+      <x>308</x>
+      <y>553</y>
+      <w>70</w>
+      <h>63</h>
     </coordinates>
     <panel_attributes>lt=-&gt;
 File Found</panel_attributes>
@@ -326,23 +326,23 @@ File Found</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>639</x>
-      <y>666</y>
-      <w>189</w>
-      <h>81</h>
+      <x>434</x>
+      <y>567</y>
+      <w>161</w>
+      <h>63</h>
     </coordinates>
     <panel_attributes>lt=-&gt;
 Send QueryHit back to origin
 </panel_attributes>
-    <additional_attributes>10.0;60.0;190.0;60.0;190.0;10.0</additional_attributes>
+    <additional_attributes>20.0;60.0;200.0;60.0;200.0;10.0</additional_attributes>
   </element>
   <element>
     <id>UMLSpecialState</id>
     <coordinates>
-      <x>468</x>
-      <y>648</y>
-      <w>18</w>
-      <h>18</h>
+      <x>308</x>
+      <y>553</y>
+      <w>14</w>
+      <h>14</h>
     </coordinates>
     <panel_attributes>type=initial</panel_attributes>
     <additional_attributes/>
@@ -350,10 +350,10 @@ Send QueryHit back to origin
   <element>
     <id>UMLSpecialState</id>
     <coordinates>
-      <x>810</x>
-      <y>657</y>
-      <w>18</w>
-      <h>18</h>
+      <x>574</x>
+      <y>560</y>
+      <w>14</w>
+      <h>14</h>
     </coordinates>
     <panel_attributes>type=final</panel_attributes>
     <additional_attributes/>
@@ -361,10 +361,10 @@ Send QueryHit back to origin
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>288</x>
-      <y>603</y>
-      <w>126</w>
-      <h>261</h>
+      <x>168</x>
+      <y>518</y>
+      <w>105</w>
+      <h>203</h>
     </coordinates>
     <panel_attributes>lt=-&gt;
 Receive QueryHit
@@ -374,10 +374,10 @@ Receive QueryHit
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>468</x>
-      <y>594</y>
-      <w>360</w>
-      <h>81</h>
+      <x>308</x>
+      <y>511</y>
+      <w>280</w>
+      <h>63</h>
     </coordinates>
     <panel_attributes>lt=-&gt;
 File not found</panel_attributes>
@@ -386,10 +386,10 @@ File not found</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>558</x>
-      <y>828</y>
-      <w>252</w>
-      <h>36</h>
+      <x>378</x>
+      <y>693</y>
+      <w>196</w>
+      <h>28</h>
     </coordinates>
     <panel_attributes>lt=-&gt;
 Decrease TTL of the received object</panel_attributes>
@@ -398,10 +398,10 @@ Decrease TTL of the received object</panel_attributes>
   <element>
     <id>UMLState</id>
     <coordinates>
-      <x>792</x>
-      <y>810</y>
-      <w>198</w>
-      <h>72</h>
+      <x>560</x>
+      <y>679</y>
+      <w>154</w>
+      <h>56</h>
     </coordinates>
     <panel_attributes>Broadcast QueryHit Object</panel_attributes>
     <additional_attributes/>
@@ -409,10 +409,10 @@ Decrease TTL of the received object</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>324</x>
-      <y>81</y>
-      <w>981</w>
-      <h>783</h>
+      <x>196</x>
+      <y>112</y>
+      <w>777</w>
+      <h>609</h>
     </coordinates>
     <panel_attributes>lt=-&gt;
 Broadcasting QueryHit</panel_attributes>
@@ -421,10 +421,10 @@ Broadcasting QueryHit</panel_attributes>
   <element>
     <id>UMLState</id>
     <coordinates>
-      <x>369</x>
-      <y>810</y>
-      <w>198</w>
-      <h>72</h>
+      <x>231</x>
+      <y>679</y>
+      <w>154</w>
+      <h>56</h>
     </coordinates>
     <panel_attributes>Receive QueryHit</panel_attributes>
     <additional_attributes/>
@@ -432,10 +432,10 @@ Broadcasting QueryHit</panel_attributes>
   <element>
     <id>UMLState</id>
     <coordinates>
-      <x>369</x>
-      <y>909</y>
-      <w>189</w>
-      <h>72</h>
+      <x>231</x>
+      <y>756</y>
+      <w>147</w>
+      <h>56</h>
     </coordinates>
     <panel_attributes>Terminated</panel_attributes>
     <additional_attributes/>
@@ -443,10 +443,10 @@ Broadcasting QueryHit</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>288</x>
-      <y>837</y>
-      <w>135</w>
-      <h>135</h>
+      <x>168</x>
+      <y>700</y>
+      <w>112</w>
+      <h>105</h>
     </coordinates>
     <panel_attributes>lt=-&gt;
 Node disconnected
@@ -456,10 +456,10 @@ Node disconnected
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>549</x>
-      <y>927</y>
-      <w>126</w>
-      <h>36</h>
+      <x>371</x>
+      <y>770</y>
+      <w>98</w>
+      <h>28</h>
     </coordinates>
     <panel_attributes>lt=-&gt;
 </panel_attributes>
@@ -468,10 +468,10 @@ Node disconnected
   <element>
     <id>UMLSpecialState</id>
     <coordinates>
-      <x>657</x>
-      <y>936</y>
-      <w>18</w>
-      <h>18</h>
+      <x>455</x>
+      <y>777</y>
+      <w>14</w>
+      <h>14</h>
     </coordinates>
     <panel_attributes>type=termination</panel_attributes>
     <additional_attributes/>
