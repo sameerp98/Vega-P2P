@@ -1,11 +1,13 @@
+import sys
+sys.path.append('../')
 from Node.descriptors_pb2 import DescriptorHeader, Ping, Pong, Query, QueryHit
 import uuid
 def deserialize(header):
-	header = header.decode('utf-8')
-	if len(header) < 60:
+	
+	if len(header) < 48:
 		#GNUTELLA OKAY
-		return header
-	print(header)
+		return header	
+	#print("\n\n", ord(header[45:46]), "type = ", len(header[45:46]))
 	if ord(header[45:46]) == DescriptorHeader.PING:
 		its_ping = Ping()
 		its_ping.ParseFromString(header)

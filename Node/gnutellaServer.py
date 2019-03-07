@@ -1,3 +1,5 @@
+import sys
+sys.path.append('../')
 from twisted.internet.protocol import Protocol, Factory
 from twisted.internet.endpoints import TCP4ClientEndpoint, connectProtocol, TCP4ServerEndpoint
 from twisted.internet import reactor
@@ -30,7 +32,8 @@ class Gnutella (Protocol):
     def dataReceived(self, data):
         # stdout.write(data)
         print("Server received data", data)
-        if data == "GNUTELLA CONNECT /0.4 \n\n":
+       # print("\ntest 1\n\n", DescriptorHeader.PONG," ---- ", type(DescriptorHeader.PONG), "\n\n")
+        if data == "GNUTELLA CONNECT /0.4 \n\n".encode('utf-8'):
             self.handle_message(data)
         else:
             new_data = deserialize.deserialize(data)
@@ -59,17 +62,26 @@ class Gnutella (Protocol):
             return
         p = ping.SerializeToString()
         print("Sending ping")
+        print(self)
         for cn in connections:
+            print("\n\n********************* connection *******************\n\n")
+            print(cn)
             if cn != self:
-                cn.transport.write(p.encode('utf-8'))  
+                print("yep")
+                cn.transport.write(p)  
+        return
 
     def handle_ping(self, ping):
         # append the ping id to seen array 
         # add some time logic to updating the array 
         # create and send the pong for ping
         # forward the ping to other nodes
-
-        print("handling ping")
+        print("\n\n-----handling ping-----\n\n")
+        print(ping)
+        for seenPing in seenPingID:
+            if seenPing == ping.descriptor_header.descriptor_id:
+                print("already recieved this ping, discarded")
+                return
         seenPingID.append(ping.descriptor_header.descriptor_id)
         ping.descriptor_header.ttl -= 1
         ping.descriptor_header.hops += 1
@@ -92,17 +104,23 @@ class Gnutella (Protocol):
         print("pong created")
         p = pong.SerializeToString()
         for cn in connections:
-            cn.transport.write(p.encode('utf-8'))  # send p object here
+            cn.transport.write(p)  # send p object here
+        return 
     
     def handle_pong(self, pong):
-        #check if the same ping id has been recieved by this node. 
-        # if so 
-        #   forward the pong to all the connections except self
-        #   ttl --
-        #   hops ++ 
-        # else 
-        #   discard this pong 
-        self.status = "incomplete"
+        print("pong recieved ", pong)
+        pong.descriptor_header.ttl -= 1
+        if pong.descriptor_header.ttl <= 0:
+            print("this pong too old, discarded")
+            return
+        for seenPing in seenPingID:
+            if seenPing == pong.descriptor_header.descriptor_id:
+                print("oh I know this ping so I will forward this pong")
+                p = pong.SerializeToString()
+                for cn in connections:
+                    cn.transport.write(p)
+                    return 
+        print("I guess I dont know the pong ... discarded")
     
     def handle_query(self, query):
         self.status = "incomplete"
