@@ -13,7 +13,8 @@ seenPingID = []
 connections = []
 createdPingID = []
 myPongs = []
-
+seenQueryID = []
+myQuery = []
 
 class Gnutella (Protocol):
     # class Gnutella (basic.LineReceiver):
@@ -50,6 +51,10 @@ class Gnutella (Protocol):
             if new_data.descriptor_header.payload_descriptor == DescriptorHeader.PING:
                 print("\n\n got a ping from someone !\n\n")
                 self.handle_ping(new_data)
+            if new_data.descriptor_header.payload_descriptor == DescriptorHeader.QUERY:
+                self.handle_query(new_data)
+            if new_data.descriptor_header.payload_descriptor == DescriptorHeader.QUERYHIT:
+                self.handle_queryhit(new_data)
 
     def handle_message(self, data):
         #handle gnutella connect and gnutella ok here
@@ -137,6 +142,60 @@ class Gnutella (Protocol):
         for cn in connections:
             cn.transport.write(p)  # send p object here
 
+    def handle_query(self, query):
+        print("\n---- recieved a query ----\n", query)
+        for seenQuery in seenQueryID:
+            if query.descriptor_header.id == seenQuery:
+                print("already recieved this query, discarded")
+                return
+        seenQueryID.append(query.descriptor_header.id)
+        if query.descriptor_header.ttl <= 0:
+            print("query too old, discarded")
+            return 
+        query.descriptor_header.ttl -= 1
+        for cn in connections:
+            if cn != self:
+                cn.transport.write(query.SerializeToString())
+        self.send_queryhit(query)
+        
+
+    def handle_queryhit(self, queryhit):
+        print("\n\n------ received a query hit ! ------\n\n")
+        for q in myQuery:
+            if queryhit.descriptor_header.id == q:
+                print("my query hit !")
+                #code for file transfer 
+                return 
+        if queryhit.descriptor_header.ttl <= 0:
+            print("query hit too old, discarded")
+            return 
+
+        for q in seenQueryID:
+            if queryhit.descriptor_header.id == q:
+                print(" I have seen this query, so I will forward this queryhit")
+                for cn in connections:
+                    if cn != self:
+                        cn.transport.write(queryhit.SerializeToString())
+         
+
+    def send_queryhit(self, query):
+        self.status = "incomplete"
+
+
+    #h o w d o y o u m a n u a l l y c a l l t h i s f u n c t i o n ? 
+    def create_query(self, file_name):
+        query = Query()
+        query.descriptor_header.id = str(uuid.uuid4())
+        myQuery.append(query.descriptor_header.id)
+        query.descriptor_header.ttl = 7
+        query.descriptor_header.hop = 0
+        query.descriptor_header.payload_descriptor = DescriptorHeader.QUERY
+        query.descriptor_header.payload_length = 4 + len(file_name)
+        query.minimum_speed = 100
+        query.search_criteria = file_name
+        print("query created")
+        for cn in connections:
+            cn.transport.write(query.SerializeToString())
 
 class GnutellaFactory (Factory):
     def __init__(self, isInitializer=False):
