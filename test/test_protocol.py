@@ -13,9 +13,13 @@ class TestProtocol(unittest.TestCase):
 		try:
 			new_server = Server.GnutellaFactory()
 			for i in range(0, 2):
-				used_port.append(reactor.listenTCP(8000 + i, new_server))
+				used_port.append(reactor.listenTCP(2140 + i, new_server))
+				print(used_port)
 			for i in range(0, 2):
-				reactor.connectTCP("127.0.0.1", 8000 + i, Sender.GnutellaFactory(True))
+				new_sender = Sender.GnutellaFactory()
+				reactor.connectTCP("127.0.0.1", 2140 + i, new_sender)
+				Sender.send_first_ping()
+				Sender.create_query("xd")
 			reactor.run()
 		except Exception as e:
 			print(e)

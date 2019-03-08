@@ -20,6 +20,7 @@ class Gnutella (Protocol):
     # class Gnutella (basic.LineReceiver):
     def __init__(self):
         self.name = "Protocol Object"
+        self.initiator = False
         print("protocol init")
 
     def connectionMade(self):
@@ -249,7 +250,32 @@ class GnutellaFactory (Factory):
     def clientConnectionLost(self, transport, reason):
         reactor.stop()
 
+#HELPER Methods
+def send_first_ping():
+    ping = Ping()
+    ping.descriptor_header.ttl = 7
+    ping.descriptor_header.descriptor_id = str(uuid.uuid4())
+    ping.descriptor_header.hops = 0
+    ping.descriptor_header.payload_descriptor = DescriptorHeader.PING
+    ping.descriptor_header.payload_length = 0
+    createdPingID.append(ping.descriptor_header.descriptor_id)
+    print("Ping is being sent")
+    for cn in connections:
+        cn.transport.write(ping.SerializeToString())
 
+def create_query(file_name):
+    query = Query()
+    query.descriptor_header.descriptor_id = str(uuid.uuid4())
+    myQuery.append(query.descriptor_header.descriptor_id)
+    query.descriptor_header.ttl = 7
+    query.descriptor_header.hops = 0
+    query.descriptor_header.payload_descriptor = DescriptorHeader.QUERY
+    query.descriptor_header.payload_length = 4 + len(file_name)
+    query.minimum_speed = 100
+    query.search_criteria = file_name
+    print("query created")
+    for cn in connections:
+        cn.transport.write(query.SerializeToString())
 
 if __name__ == "__main__":
     # targetIp = sys.argv [1] #Enter IP then port

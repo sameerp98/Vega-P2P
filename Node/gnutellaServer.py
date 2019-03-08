@@ -38,12 +38,16 @@ class Gnutella (Protocol):
         else:
             new_data = deserialize.deserialize(data)
             if new_data.descriptor_header.payload_descriptor == DescriptorHeader.PING:
+                print("received ping")
                 self.handle_ping(new_data)
             if new_data.descriptor_header.payload_descriptor == DescriptorHeader.PONG:
+                print("received ping")
                 self.handle_pong(new_data)
             if new_data.descriptor_header.payload_descriptor == DescriptorHeader.QUERY:
+                print("received ping")
                 self.handle_query(new_data)
             if new_data.descriptor_header.payload_descriptor == DescriptorHeader.QUERYHIT:
+                print("received ping")
                 self.handle_queryhit(new_data)
 
     def handle_message(self, data):
@@ -123,7 +127,52 @@ class Gnutella (Protocol):
         print("I guess I dont know the pong ... discarded")
     
     def handle_query(self, query):
-        self.status = "incomplete"
+        print("\n---- recieved a query ----\n", query)
+        for seenQuery in seenQueryID:
+            if query.descriptor_header.id == seenQuery:
+                print("already recieved this query, discarded")
+                return
+        seenQueryID.append(query.descriptor_header.id)
+        if query.descriptor_header.ttl <= 0:
+            print("query too old, discarded")
+            return 
+        query.descriptor_header.ttl -= 1
+        for cn in connections:
+            if cn != self:
+                cn.transport.write(query.SerializeToString())
+        self.send_queryhit(query)
+
+    def send_queryhit(self, query):
+        queryhit = QueryHit()
+        queryhit.descriptor_header.id = str(uuid.uuid4())
+        query.descriptor_header.ttl = 7
+        query.descriptor_header.hop = 0
+        query.descriptor_header.payload_descriptor = DescriptorHeader.QUERYHIT
+        file_name = query.search_criteria
+        result_set = []
+        file_index = 0
+        for path, dirs, files in os.walk("./files"):
+            if path:
+                current_path = path
+            if files:
+                for file in files:
+                    if file in file_name:
+                        new_file = query_hit.result_set.add()
+                        new_file.file_index = file_index
+                        new_file.file_size = os.path.getsize(os.path.join(current_path, file))
+                        new_file.file_name = os.path.join(current_path, file)
+                        file_index += 1
+        if file_index == 0:
+            return
+        queryhit.no_of_hits = file_index
+        queryhit.ip_address = self.transport.getHost().host
+        queryhit.speed = 23 #random
+        queryhit.servent_identifier = query.descriptor_header.descriptor_id
+        queryhit.port = self.transport.getHost().port
+        queryhit.descriptor_header.payload_length = 4 + len(queryhit.result_set)
+        for cn in connections:
+            if cn != self:
+                cn.transport.write(queryhit)
     
     def handle_queryhit(self, queryhit):
         self.status = "incomplete"
