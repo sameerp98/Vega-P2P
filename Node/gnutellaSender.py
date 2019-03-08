@@ -179,7 +179,36 @@ class Gnutella (Protocol):
          
 
     def send_queryhit(self, query):
-        self.status = "incomplete"
+        queryhit = QueryHit()
+        queryhit.descriptor_header.id = str(uuid.uuid4())
+        query.descriptor_header.ttl = 7
+        query.descriptor_header.hop = 0
+        query.descriptor_header.payload_descriptor = DescriptorHeader.QUERYHIT
+        file_name = query.search_criteria
+        result_set = []
+        file_index = 0
+        for path, dirs, files in os.walk("./files"):
+            if path:
+                current_path = path
+            if files:
+                for file in files:
+                    if file in file_name:
+                        new_file = query_hit.result_set.add()
+                        new_file.file_index = file_index
+                        new_file.file_size = os.path.getsize(os.path.join(current_path, file))
+                        new_file.file_name = os.path.join(current_path, file)
+                        file_index += 1
+        if file_index == 0:
+            return
+        queryhit.no_of_hits = file_index
+        queryhit.ip_address = self.transport.getHost().host
+        queryhit.speed = 23 #random
+        queryhit.servent_identifier = query.descriptor_header.descriptor_id
+        queryhit.port = self.transport.getHost().port
+        queryhit.descriptor_header.payload_length = 4 + len(queryhit.result_set)
+        for cn in connections:
+            if cn != self:
+                cn.transport.write(queryhit)
 
 
     #h o w d o y o u m a n u a l l y c a l l t h i s f u n c t i o n ? 
