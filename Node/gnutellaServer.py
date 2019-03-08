@@ -9,6 +9,8 @@ from Node.descriptors_pb2 import DescriptorHeader, Ping, Pong, Query, QueryHit
 import uuid
 connections = []
 seenPingID = []
+seenQueryID = []
+
 
 
 class Gnutella (Protocol):
@@ -123,11 +125,36 @@ class Gnutella (Protocol):
         print("I guess I dont know the pong ... discarded")
     
     def handle_query(self, query):
-        self.status = "incomplete"
+        print("\n---- recieved a query ----\n", query)
+        for seenQuery in seenQueryID:
+            if query.descriptor_header.descriptor_id == seenQuery:
+                print("already recieved this query, discarded")
+                return
+        seenQueryID.append(query.descriptor_header.descriptor_id)
+        if query.descriptor_header.ttl <= 0:
+            print("query too old, discarded")
+            return 
+        query.descriptor_header.ttl -= 1
+        for cn in connections:
+            if cn != self:
+                cn.transport.write(query.SerializeToString())
+        self.send_queryhit(query)
     
     def handle_queryhit(self, queryhit):
-        self.status = "incomplete"
+        print("\n\n------ received a query hit ! ------\n\n")
+        if queryhit.descriptor_header.ttl <= 0:
+            print("query hit too old, discarded")
+            return 
 
+        for q in seenQueryID:
+            if queryhit.descriptor_header.id == q:
+                print(" I have seen this query, so I will forward this queryhit")
+                for cn in connections:
+                    if cn != self:
+                        cn.transport.write(queryhit.SerializeToString())
+
+    def send_queryhit(self, query):
+        self.status = "incomplete"
 
 class GnutellaFactory (Factory):
     def __init__(self, isInitializer=False):
@@ -148,6 +175,8 @@ class GnutellaFactory (Factory):
 
     def clientConnectionFailed(self, transport, reason):
         print("Client conneciton lost")
+
+
 
 
 if __name__ == "__main__":

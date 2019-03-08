@@ -145,10 +145,10 @@ class Gnutella (Protocol):
     def handle_query(self, query):
         print("\n---- recieved a query ----\n", query)
         for seenQuery in seenQueryID:
-            if query.descriptor_header.id == seenQuery:
+            if query.descriptor_header.descriptor_id == seenQuery:
                 print("already recieved this query, discarded")
                 return
-        seenQueryID.append(query.descriptor_header.id)
+        seenQueryID.append(query.descriptor_header.descriptor_id)
         if query.descriptor_header.ttl <= 0:
             print("query too old, discarded")
             return 
@@ -179,23 +179,21 @@ class Gnutella (Protocol):
          
 
     def send_queryhit(self, query):
-        self.status = "incomplete"
-
-
-    #h o w d o y o u m a n u a l l y c a l l t h i s f u n c t i o n ? 
-    def create_query(self, file_name):
-        query = Query()
-        query.descriptor_header.id = str(uuid.uuid4())
-        myQuery.append(query.descriptor_header.id)
-        query.descriptor_header.ttl = 7
-        query.descriptor_header.hop = 0
-        query.descriptor_header.payload_descriptor = DescriptorHeader.QUERY
-        query.descriptor_header.payload_length = 4 + len(file_name)
-        query.minimum_speed = 100
-        query.search_criteria = file_name
-        print("query created")
-        for cn in connections:
-            cn.transport.write(query.SerializeToString())
+        new_query_hit = QueryHit()
+        print("making query hit ! ")
+        result_set = []
+        file_index = 0
+        for path, dirs, files in os.walk("./files"):
+            if path:
+                current_path = path
+            if files:
+                for file in files:
+                    new_file = new_query_hit.result_set.add()
+                    new_file.file_index = file_index
+                    new_file.file_size = os.path.getsize(os.path.join(current_path, file))
+                    new_file.file_name = os.path.join(current_path, file)
+                    file_index += 1
+                    print(file_index)
 
 class GnutellaFactory (Factory):
     def __init__(self, isInitializer=False):
@@ -221,6 +219,29 @@ class GnutellaFactory (Factory):
         reactor.stop()
 
 
+#h o w d o y o u m a n u a l l y c a l l t h i s f u n c t i o n ? 
+def create_query(file_name):
+    query = Query()
+    query.descriptor_header.descriptor_id = str(uuid.uuid4())
+    myQuery.append(query.descriptor_header.descriptor_id)
+    query.descriptor_header.ttl = 7
+    query.descriptor_header.hops = 0
+    query.descriptor_header.payload_descriptor = DescriptorHeader.QUERY
+    query.descriptor_header.payload_length = 4 + len(file_name)
+    query.minimum_speed = 100
+    query.search_criteria = file_name
+    print("***\nquery created\n***")
+    for cn in connections:
+        cn.transport.write(query.SerializeToString())
+            
+def call_create_query(file_name):
+    reactor.callFromThread(create_query, file_name)
+	
+    	
+def get_user_input():
+    print("\n--- inside the user input thread ---\n")
+    file_name = input("enter file name :\n")
+    call_create_query(file_name)
 
 if __name__ == "__main__":
     # targetIp = sys.argv [1] #Enter IP then port
@@ -231,4 +252,5 @@ if __name__ == "__main__":
     #usedport= reactor.listenTCP(8007, server)
     # reactor.connectTCP("localhost",8000,GnutellaFactory(True))
     reactor.connectTCP("127.0.0.1", 8000, GnutellaFactory(True))
+    reactor.callInThread(get_user_input)
     reactor.run()

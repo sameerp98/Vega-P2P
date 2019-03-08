@@ -229,17 +229,9 @@ def call_create_query(file_name):
 	
     	
 def get_user_input():
-    while 1:
-    	print("\n--- inside the user input thread ---\n")
-    	file_name = input("enter file name :\n")
-    	call_create_query(file_name)
-    	sleep(10)
-    	
-
-def sleep(secs):
-    d = defer.Deferred()
-    reactor.callLater(secs, d.callback, None)
-    return d    	
+    print("\n--- inside the user input thread ---\n")
+    file_name = input("enter file name :\n")
+    call_create_query(file_name)
 
 if __name__ == "__main__":
     # targetIp = sys.argv [1] #Enter IP then port
