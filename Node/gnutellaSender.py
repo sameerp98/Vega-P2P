@@ -15,6 +15,7 @@ createdPingID = []
 myPongs = []
 seenQueryID = []
 myQuery = []
+myQueryHit = []
 
 class Gnutella (Protocol):
     # class Gnutella (basic.LineReceiver):
@@ -162,8 +163,11 @@ class Gnutella (Protocol):
     def handle_queryhit(self, queryhit):
         print("\n\n------ received a query hit ! ------\n\n")
         for q in myQuery:
-            if queryhit.descriptor_header.id == q:
-                print("my query hit !")
+            if queryhit.descriptor_header.descriptor_id == q:
+                print("\nmy query hit !\n")
+                print(queryhit)
+                print("\n\n")
+                myQueryHit.append(queryhit)
                 #code for file transfer 
                 return 
         if queryhit.descriptor_header.ttl <= 0:
@@ -171,7 +175,7 @@ class Gnutella (Protocol):
             return 
 
         for q in seenQueryID:
-            if queryhit.descriptor_header.id == q:
+            if queryhit.descriptor_header.descriptor_id == q:
                 print(" I have seen this query, so I will forward this queryhit")
                 for cn in connections:
                     if cn != self:
@@ -179,21 +183,43 @@ class Gnutella (Protocol):
          
 
     def send_queryhit(self, query):
-        new_query_hit = QueryHit()
-        print("making query hit ! ")
-        result_set = []
+        queryhit = QueryHit()
+        queryhit.descriptor_header.descriptor_id = query.descriptor_header.descriptor_id
+        queryhit.descriptor_header.ttl = 7
+        queryhit.descriptor_header.hops = 0
+        queryhit.descriptor_header.payload_descriptor = DescriptorHeader.QUERYHIT
+        file_name = query.search_criteria
         file_index = 0
-        for path, dirs, files in os.walk("./files"):
+        for path, dirs, files in os.walk("../files"):
+            print("\nfiles --- \n",files)
             if path:
                 current_path = path
             if files:
                 for file in files:
-                    new_file = new_query_hit.result_set.add()
-                    new_file.file_index = file_index
-                    new_file.file_size = os.path.getsize(os.path.join(current_path, file))
-                    new_file.file_name = os.path.join(current_path, file)
-                    file_index += 1
-                    print(file_index)
+                    print("\nfile = ", file)
+                    if file_name in file:
+                        new_file = QueryHit.ResultSet()
+                        new_file.file_index = file_index
+                        new_file.file_size = os.path.getsize(os.path.join(current_path, file))
+                        new_file.file_name = os.path.join(current_path, file)
+                        queryhit.result_set.extend([new_file])
+                        file_index += 1
+        if file_index == 0:
+            print("\nfile not found -- no query hit generated\n")
+            return
+        queryhit.no_of_hits = file_index
+        queryhit.ip_address = self.transport.getHost().host
+        queryhit.speed = 23 #random
+        queryhit.servent_identifier = query.descriptor_header.descriptor_id
+        queryhit.port = self.transport.getHost().port
+        queryhit.descriptor_header.payload_length = 4 + len(queryhit.result_set)
+        print("\n\n----------query hit created ---------\n\n")
+        print(queryhit)
+        self.transport.write(queryhit.SerializeToString())
+        """
+        for cn in connections:
+            cn.transport.write(queryhit.SerializeToString())
+        """
 
 class GnutellaFactory (Factory):
     def __init__(self, isInitializer=False):
@@ -219,7 +245,6 @@ class GnutellaFactory (Factory):
         reactor.stop()
 
 
-#h o w d o y o u m a n u a l l y c a l l t h i s f u n c t i o n ? 
 def create_query(file_name):
     query = Query()
     query.descriptor_header.descriptor_id = str(uuid.uuid4())
@@ -239,9 +264,10 @@ def call_create_query(file_name):
 	
     	
 def get_user_input():
-    print("\n--- inside the user input thread ---\n")
-    file_name = input("enter file name :\n")
-    call_create_query(file_name)
+    while True:
+        #print("\n--- inside the user input thread ---\n")
+        file_name = input("enter file name :\n")
+        call_create_query(file_name)
 
 if __name__ == "__main__":
     # targetIp = sys.argv [1] #Enter IP then port
