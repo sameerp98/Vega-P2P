@@ -25,8 +25,8 @@ class Gnutella (Protocol):
 
     def connectionMade(self):
         #print ("connection recevived")
-        print("appending connection ", self)
-        connections.append(self)
+        #print("appending connection ", self)
+        #connections.append(self)
         peer = self.transport.getPeer()
         print("Connected to {0}:{1}".format(peer.host, peer.port))
         print("self address", self.transport.getHost().host, ":", self.transport.getHost().port)
@@ -45,6 +45,8 @@ class Gnutella (Protocol):
         print("data recieved", data)
         if data == "Gnutella OK \n\n".encode('utf-8'):
         	self.send_first_ping()
+        elif data == "GNUTELLA CONNECT /0.4 \n\n".encode('utf-8'):
+            self.handle_message(data)
         else:
             new_data = deserialize.deserialize(data)
             if new_data.descriptor_header.payload_descriptor == DescriptorHeader.PONG:
@@ -58,19 +60,23 @@ class Gnutella (Protocol):
                 self.handle_queryhit(new_data)
 
     def handle_message(self, data):
-        #handle gnutella connect and gnutella ok here
-        peer = self.transport.getPeer()
-        print("sending ping to {0}".format(peer.host))
-        self.send_first_ping()
-
+        #handle Gnutella CONNECT here
+        #print("appending connection ", self)
+        #connections.append(self)
+        if self not in connections:
+            print("\n\n\n\nCONNECTION: \n\n\n\n", self)
+            peer = self.transport.getPeer()
+            print("Connected to {0}:{1}".format(peer.host, peer.port))
+            connections.append(self)
+        self.transport.write("Gnutella OK \n\n".encode('utf-8'))
+        return
+    
     def send_first_ping(self):
-        # if ping.ttl < 7:
-        #	return
-        # if ping.payload_descriptor:
-        #	print ("Forwarding Ping")
-        # else:
-        #	p = ping ("Dummy Payload")
-            # serialize
+        if self not in connections:
+            print("\n\n\n\nCONNECTION: \n\n\n\n", self)
+            peer = self.transport.getPeer()
+            print("Connected to {0}:{1}".format(peer.host, peer.port))
+            connections.append(self)
         ping = Ping()
         ping.descriptor_header.ttl = 7
         ping.descriptor_header.descriptor_id = str(uuid.uuid4())
@@ -81,7 +87,8 @@ class Gnutella (Protocol):
         print("Ping is being sent")
         for cn in connections:
             cn.transport.write(ping.SerializeToString())
-    
+        return
+
     def handle_pong(self, pong):
         #if the pong id matched created ping id, save it somehow
         #else discard it
@@ -223,23 +230,25 @@ class Gnutella (Protocol):
 
 class GnutellaFactory (Factory):
     def __init__(self, isInitializer=False):
-        print("factory init")
+        #print("factory init")
         self.initializer = False
         if isInitializer:
             self.initializer = True
 
     def buildProtocol(self, addr):
         prot = Gnutella()
-        print("protocol built")
+        #print("protocol built")
         if self.initializer:
             prot.setInitializer()
         return prot
 
     def startedConnecting(self, connector):
-        print("Trying to connect")
+        #print("Trying to connect")
+        pass
 
     def clientConnectionFailed(self, transport, reason):
-        print("Client conneciton lost")
+        #print("Client conneciton lost")
+        pass
 
     def clientConnectionLost(self, transport, reason):
         reactor.stop()

@@ -2,7 +2,6 @@ import unittest
 import sys
 sys.path.append('../')
 from Node import gnutellaSender as Sender
-from Node import gnutellaServer as Server
 from twisted.internet.endpoints import TCP4ClientEndpoint, connectProtocol, TCP4ServerEndpoint
 from twisted.internet import reactor
 
