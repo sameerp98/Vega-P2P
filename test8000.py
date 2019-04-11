@@ -1,4 +1,6 @@
 import sys
+import os
+import _thread as thread
 sys.path.append('../')
 from Node import gnutellaSender as Sender
 
@@ -21,5 +23,9 @@ def gnutella_connect(port, ip):
 
 
 if __name__ == "__main__":
+    #os.chdir('../')
+    print(os.getcwd())
+    thread.start_new_thread(os.system, ("python -m http.server 9020",))
+    #os.chdir('./test')
     start_gnutella(0, 100)
     get_user_input()

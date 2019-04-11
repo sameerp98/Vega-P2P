@@ -9,6 +9,9 @@ from Node.descriptors_pb2 import DescriptorHeader, Ping, Pong, Query, QueryHit
 #from twisted.protocols import basic
 import sys
 import os
+import requests
+
+from filetransfer import server
 seenPingID = []
 connections = []
 createdPingID = []
@@ -21,7 +24,8 @@ class Gnutella (Protocol):
     # class Gnutella (basic.LineReceiver):
     def __init__(self):
         self.name = "Protocol Object"
-        print("protocol init")
+        self.initiator = False
+        #print("protocol init")
 
     def connectionMade(self):
         #print ("connection recevived")
@@ -34,7 +38,7 @@ class Gnutella (Protocol):
             self.transport.write("GNUTELLA CONNECT /0.4 \n\n".encode('utf-8'))
  
     def setInitializer(self):
-        print("idk")
+        #print("idk")
         self.initiator = True
 
     def dataReceived(self, data):
@@ -42,13 +46,15 @@ class Gnutella (Protocol):
         #lines = data.split (";")
         # for line in lines:
         #	if len(line)>0:
-        print("data recieved", data)
+        #print("data recieved", data)
         if data == "Gnutella OK \n\n".encode('utf-8'):
         	self.send_first_ping()
         elif data == "GNUTELLA CONNECT /0.4 \n\n".encode('utf-8'):
             self.handle_message(data)
         else:
             new_data = deserialize.deserialize(data)
+            if new_data == None:
+                return
             if new_data.descriptor_header.payload_descriptor == DescriptorHeader.PONG:
                 self.handle_pong(new_data)
             if new_data.descriptor_header.payload_descriptor == DescriptorHeader.PING:
@@ -64,16 +70,16 @@ class Gnutella (Protocol):
         #print("appending connection ", self)
         #connections.append(self)
         if self not in connections:
-            print("\n\n\n\nCONNECTION: \n\n\n\n", self)
+            #print("\n\n\n\nCONNECTION: \n\n\n\n", self)
             peer = self.transport.getPeer()
-            print("Connected to {0}:{1}".format(peer.host, peer.port))
+            #print("Connected to {0}:{1}".format(peer.host, peer.port))
             connections.append(self)
         self.transport.write("Gnutella OK \n\n".encode('utf-8'))
         return
     
     def send_first_ping(self):
         if self not in connections:
-            print("\n\n\n\nCONNECTION: \n\n\n\n", self)
+            #print("\n\n\n\nCONNECTION: \n\n\n\n", self)
             peer = self.transport.getPeer()
             print("Connected to {0}:{1}".format(peer.host, peer.port))
             connections.append(self)
@@ -101,11 +107,11 @@ class Gnutella (Protocol):
         print("not my pong")
         pong.descriptor_header.ttl -= 1
         if pong.descriptor_header.ttl <= 0:
-            print("this pong too old, discarded")
+            print("this pong is too old, discarded")
             return
         for seenPing in seenPingID:
             if seenPing == pong.descriptor_header.descriptor_id:
-                print("oh I know this ping so I will forward this pong")
+                print("I know this ping so I will forward this pong")
                 p = pong.SerializeToString()
                 for cn in connections:
                     cn.transport.write(p)
@@ -175,7 +181,20 @@ class Gnutella (Protocol):
                 print(queryhit)
                 print("\n\n")
                 myQueryHit.append(queryhit)
-                #code for file transfer 
+                #code for file transfer
+                # for result in queryhit.result_set:
+                #     print((result.file_name))
+                resp = requests.get('http://'+queryhit.ip_address + ':' + '9020'\
+                     + os.path.abspath(os.path.join('/files', queryhit.result_set[0].file_name)))
+                file_name = queryhit.result_set[0].file_name[9:]
+                print(file_name)
+                print(os.path.join('/home/hp/Desktop/projects/VegaP2P/Vega-P2P/downloads/'\
+                    , file_name))
+                open(os.path.join('/home/hp/Desktop/projects/VegaP2P/Vega-P2P/downloads/'\
+                    , file_name), 'wb')\
+                    .write(resp.content)
+                
+                
                 return 
         if queryhit.descriptor_header.ttl <= 0:
             print("query hit too old, discarded")

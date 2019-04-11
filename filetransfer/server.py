@@ -28,9 +28,11 @@ class site (resource.Resource):
             return source.read()
 
 #root= static.File ("/home/hardi/Downloads/awesomefile.txt") easier approach
+"""
 httpserver = server.Site (site())
 reactor.listenTCP (8080, httpserver)
 reactor.run()
+"""
 '''
 Usage : enter localhost:8080/home/user10702/Downloads/filename 
 Output : returns the file 
